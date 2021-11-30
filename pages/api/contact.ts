@@ -17,12 +17,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     const newMessage: TNewMessage = { email, name, message }
-
     let client
     try {
-      client = await MongoClient.connect(
-        'mongodb+srv://kresimir:IlQISmOn9A9wQmsI@kresimir-cluster.grjfn.mongodb.net/nextjs-course-blog?retryWrites=true&w=majority'
-      )
+      client = await MongoClient.connect(process.env.API_KEY || '')
     } catch (error: any) {
       res.status(500).json({ message: 'Could not connect to database' })
       return
