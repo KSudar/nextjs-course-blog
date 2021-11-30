@@ -4,8 +4,18 @@ import matter from 'gray-matter'
 
 const postsDirectory = path.join(process.cwd(), 'content', 'posts')
 
-const getPostData = (fileName: string) => {
-  const filePath = path.join(postsDirectory, fileName)
+const getPostsFileNames = () => {
+  const postsDirectory = path.join(process.cwd(), 'content', 'posts')
+  return fs.readdirSync(postsDirectory)
+}
+
+const getAllSlugs = () => {
+  return getPostsFileNames().map((postFile) => postFile.replace(/\.md$/, ''))
+}
+
+const getPostData = (postIdentifier: string) => {
+  const slug = postIdentifier.replace(/\.md$/, '')
+  const filePath = path.join(postsDirectory, `${slug}.md`)
   const fileContent = fs.readFileSync(filePath, 'utf-8')
   const { data, content } = matter(fileContent)
   const { title, date, excerpt, image, isFeatured } = data
@@ -14,15 +24,14 @@ const getPostData = (fileName: string) => {
     image,
     date,
     excerpt,
-    slug: fileName.replace(/\.md$/, ''),
+    slug,
     content: content,
     isFeatured,
   }
 }
 
 const getAllPosts = () => {
-  const postsDirectorty = path.join(process.cwd(), 'content', 'posts')
-  const postFiles = fs.readdirSync(postsDirectorty)
+  const postFiles = getPostsFileNames()
   return postFiles
     .map((postFile) => getPostData(postFile))
     .sort((postA, postB) => (postA.date > postB.date ? -1 : 1))
@@ -32,4 +41,4 @@ const getFeaturedPosts = () => {
   return getAllPosts().filter((post) => post.isFeatured)
 }
 
-export { getAllPosts, getFeaturedPosts }
+export { getAllPosts, getFeaturedPosts, getAllSlugs }

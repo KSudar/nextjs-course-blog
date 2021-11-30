@@ -1,3 +1,5 @@
+import { ObjectId } from 'bson'
+
 export type TPost = {
   title: string
   date: string
@@ -6,4 +8,11 @@ export type TPost = {
   slug: string
   content?: string
   isFeatured: boolean
+}
+
+export type TNewMessage = {
+  id?: ObjectId
+  message: string
+  email: string
+  name: string
 }
