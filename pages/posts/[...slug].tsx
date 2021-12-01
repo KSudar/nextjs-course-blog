@@ -9,12 +9,23 @@ const SinglePostPage = ({ post }: { post: TPost }) => {
     <>
       <Head>
         <title>{post.title}</title>
+
+        {/* <meta
+          name='msapplication-TileImage'
+          content={`/images/posts/${post.slug}/${post.image}`}
+        /> */}
+
+        <meta property='og:title' content={post.title} />
+
         <meta name='description' content={post.excerpt} />
         <meta
           property='og:image'
           itemProp='image'
           content={`/images/posts/${post.slug}/${post.image}`}
         />
+        <meta property='og:image:type' content='image/png' />
+        <meta property='og:image:width' content='300' />
+        <meta property='og:image:height' content='300' />
       </Head>
       <PostContent post={post} />
     </>
