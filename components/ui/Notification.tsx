@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import styles from './Notification.module.scss'
+import ReactDOM from 'react-dom'
 
 function Notification({
   title,
@@ -37,7 +38,7 @@ function Notification({
 
   const cssClasses = `${styles.notification} ${statusClasses}`
 
-  return (
+  return ReactDOM.createPortal(
     <>
       {displayNotification && (
         <div
@@ -51,7 +52,8 @@ function Notification({
           <p>{message}</p>
         </div>
       )}
-    </>
+    </>,
+    document.getElementById('notifications') as Element
   )
 }
 
