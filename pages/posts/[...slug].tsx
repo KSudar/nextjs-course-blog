@@ -10,10 +10,10 @@ const SinglePostPage = ({ post }: { post: TPost }) => {
       <Head>
         <title>{post.title}</title>
 
-        {/* <meta
+        <meta
           name='msapplication-TileImage'
           content={`/images/posts/${post.slug}/${post.image}`}
-        /> */}
+        />
 
         <meta property='og:title' content={post.title} />
 
