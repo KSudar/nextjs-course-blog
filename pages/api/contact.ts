@@ -20,7 +20,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     let client
     try {
       client = await MongoClient.connect(process.env.API_KEY || '')
-      console.log('API KEY ', process.env.API_KEY)
     } catch (error: any) {
       res.status(500).json({ message: 'Could not connect to database' })
       return
