@@ -25,7 +25,7 @@ const SinglePostPage = ({ post }: { post: TPost }) => {
         />
         <meta property='og:image:type' content='image/png' />
         <meta property='og:image:width' content='300' />
-        <meta property='og:image:height' content='300' />
+        <meta property='og:image:height' content='200' />
       </Head>
       <PostContent post={post} />
     </>
