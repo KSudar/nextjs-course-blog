@@ -1,4 +1,3 @@
-import type { NextPage } from 'next'
 import AllPosts from '@components/posts/AllPosts'
 import { getAllPosts } from '@lib/postsUtil'
 import { TPost } from '@type/types'
