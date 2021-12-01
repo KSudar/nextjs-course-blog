@@ -12,6 +12,7 @@ const SinglePostPage = ({ post }: { post: TPost }) => {
         <meta name='description' content={post.excerpt} />
         <meta
           property='og:image'
+          itemProp='image'
           content={`/images/posts/${post.slug}/${post.image}`}
         />
       </Head>
