@@ -25,6 +25,3 @@ export async function getStaticProps() {
   }
   return { props, revalidate: 600 }
 }
-
-// 1) Hero => Present ourselves
-// 2) Featured Posts

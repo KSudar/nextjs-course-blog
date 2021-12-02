@@ -18,8 +18,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     const newMessage: TNewMessage = { email, name, message }
     let client
+    const connectionString = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_CLUSTER}.grjfn.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`
     try {
-      client = await MongoClient.connect(process.env.API_KEY || '')
+      client = await MongoClient.connect(connectionString)
     } catch (error: any) {
       res.status(500).json({ message: 'Could not connect to database' })
       return
