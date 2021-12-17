@@ -16,3 +16,8 @@ export type TNewMessage = {
   email: string
   name: string
 }
+export type TUserCreate = {
+  id?: ObjectId
+  email: string
+  password: string
+}

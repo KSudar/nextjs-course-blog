@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { MongoClient } from 'mongodb'
 import { TNewMessage } from '@type/types'
+import { connectToDatabase } from '@lib/db'
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'POST') {
     const { email, name, message } = req.body
@@ -16,17 +16,17 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       res.status(422).json({ message: 'Invalid input.' })
     }
 
-    const newMessage: TNewMessage = { email, name, message }
     let client
-    const connectionString = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_CLUSTER}.grjfn.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`
+
     try {
-      client = await MongoClient.connect(connectionString)
+      client = await connectToDatabase()
     } catch (error: any) {
       res.status(500).json({ message: 'Could not connect to database' })
       return
     }
 
     const db = client.db()
+    const newMessage: TNewMessage = { email, name, message }
 
     try {
       const result = await db.collection('messages').insertOne(newMessage)

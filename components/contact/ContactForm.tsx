@@ -1,7 +1,8 @@
 import { FormEvent, useState } from 'react'
 import styles from './ContactForm.module.scss'
 import Notification from '@components/ui/Notification'
-import { sendContactData } from '@lib/ContactApi'
+import { sendMessageApi } from '@lib/apiService'
+import { sendMessageNotification } from '@utils/utils'
 
 const ContactForm = () => {
   const [email, setEmail] = useState<string>('')
@@ -14,7 +15,7 @@ const ContactForm = () => {
     event.preventDefault()
     setRequestStatus('pending')
     try {
-      await sendContactData({ email, name, message })
+      await sendMessageApi({ email, name, message })
 
       setRequestStatus('success')
       setMessage('')
@@ -24,31 +25,6 @@ const ContactForm = () => {
       setRequestError(error.message)
       setRequestStatus('error')
     }
-  }
-
-  const renderNotification = () => {
-    let notification
-    if (requestStatus === 'pending') {
-      notification = {
-        status: 'pending',
-        title: 'Sending message...',
-        message: 'Your message is on its way',
-      }
-    } else if (requestStatus === 'success') {
-      notification = {
-        status: 'success',
-        title: 'Message sent!',
-        message: 'Your message is sent',
-      }
-    } else {
-      notification = {
-        status: 'error',
-        title: 'Error!',
-        message: requestError || 'There was an error!',
-      }
-    }
-
-    return notification
   }
 
   return (
@@ -95,7 +71,7 @@ const ContactForm = () => {
       </form>
       {!!requestStatus && (
         <Notification
-          {...renderNotification()}
+          {...sendMessageNotification(requestStatus, requestError)}
           onClick={() => {
             setRequestStatus('')
             setRequestError('')
